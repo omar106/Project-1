@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b16">
+  <title>Hello, World!</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f7f8ff;
+      --muted: #abb0c5;
+      --violet: #9d7cff;
+      --cyan: #57e6ff;
+      --pink: #ff70c9;
+      --glass: rgba(16, 20, 39, 0.62);
+      --line: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(99, 72, 220, 0.24), transparent 32rem),
+        radial-gradient(circle at 85% 80%, rgba(0, 190, 220, 0.18), transparent 30rem),
+        #080b16;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+    }
+
+    .orb {
+      position: fixed;
+      width: 22rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.32;
+      pointer-events: none;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+
+    .orb--one {
+      top: -9rem;
+      left: -6rem;
+      background: var(--violet);
+    }
+
+    .orb--two {
+      right: -7rem;
+      bottom: -10rem;
+      background: var(--cyan);
+      animation-delay: -4s;
+    }
+
+    .shell {
+      position: relative;
+      width: min(92vw, 980px);
+      padding: 1px;
+      overflow: hidden;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.04));
+      box-shadow:
+        0 32px 90px rgba(0, 0, 0, 0.48),
+        0 0 100px rgba(117, 91, 255, 0.1);
+      animation: arrive 900ms cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -60%;
+      background: conic-gradient(
+        from 90deg,
+        transparent 0 35%,
+        rgba(87, 230, 255, 0.52),
+        rgba(157, 124, 255, 0.58),
+        transparent 65% 100%
+      );
+      animation: spin 10s linear infinite;
+    }
+
+    .card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 0.9fr 1.35fr;
+      min-height: 540px;
+      overflow: hidden;
+      border-radius: 29px;
+      background: var(--glass);
+      backdrop-filter: blur(24px) saturate(125%);
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem;
+      border-right: 1px solid var(--line);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.065), transparent 65%);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .brand__mark {
+      width: 11px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 22px var(--cyan);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .sidebar__number {
+      margin: auto 0;
+      color: rgba(255, 255, 255, 0.055);
+      font-size: clamp(7rem, 16vw, 11rem);
+      font-weight: 900;
+      line-height: 0.8;
+      letter-spacing: -0.08em;
+      user-select: none;
+    }
+
+    .sidebar__note {
+      max-width: 13rem;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(2rem, 6vw, 5rem);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      gap: 0.55rem;
+      margin-bottom: 1.4rem;
+      padding: 0.48rem 0.78rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #dfe1ed;
+      background: rgba(255, 255, 255, 0.045);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 5px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #78ffa8;
+      box-shadow: 0 0 12px #78ffa8;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(4.2rem, 11vw, 8rem);
+      font-weight: 850;
+      line-height: 0.84;
+      letter-spacing: -0.075em;
+    }
+
+    h1 span {
+      display: block;
+      padding-right: 0.09em;
+      color: transparent;
+      background: linear-gradient(100deg, var(--violet), var(--pink) 48%, var(--cyan));
+      background-clip: text;
+      -webkit-background-clip: text;
+      background-size: 180% auto;
+      animation: shimmer 5s linear infinite;
+    }
+
+    .lede {
+      max-width: 35rem;
+      margin: 1.8rem 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.75;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2.3rem;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 0.9rem 1.2rem;
+      color: #0a0d18;
+      background: linear-gradient(135deg, #ffffff, #cdd6ff);
+      box-shadow: 0 10px 32px rgba(132, 156, 255, 0.18);
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 38px rgba(132, 156, 255, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:focus-visible {
+      outline: 3px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
+    .signature {
+      color: #858ba5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.76rem;
+    }
+
+    .sparkle {
+      position: absolute;
+      right: 9%;
+      top: 14%;
+      width: 22px;
+      height: 22px;
+      opacity: 0.72;
+      animation: twinkle 2.8s ease-in-out infinite;
+    }
+
+    .sparkle::before,
+    .sparkle::after {
+      content: "";
+      position: absolute;
+      inset: 50% 0 auto;
+      height: 1px;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    .sparkle::after {
+      transform: rotate(90deg);
+    }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(24px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes drift {
+      to { transform: translate3d(3rem, 2rem, 0) scale(1.16); }
+    }
+
+    @keyframes pulse {
+      50% { opacity: 0.55; transform: scale(0.78); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes shimmer {
+      to { background-position: 180% center; }
+    }
+
+    @keyframes twinkle {
+      50% { opacity: 0.25; transform: rotate(45deg) scale(0.62); }
+    }
+
+    @media (max-width: 700px) {
+      body { overflow: auto; padding: 1rem; }
+      .card { grid-template-columns: 1fr; min-height: min(760px, calc(100vh - 2rem)); }
+      .sidebar { min-height: 150px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .sidebar__number { display: none; }
+      .sidebar__note { margin-top: 2.5rem; }
+      .hero { padding: 2.4rem 2rem 3rem; }
+      h1 { font-size: clamp(4rem, 24vw, 6rem); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb--one" aria-hidden="true"></div>
+  <div class="orb orb--two" aria-hidden="true"></div>
+
+  <main class="shell">
+    <section class="card" aria-labelledby="greeting">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand__mark"></span>First contact</div>
+        <div class="sidebar__number" aria-hidden="true">01</div>
+        <p class="sidebar__note">A tiny page with a little extra atmosphere.</p>
+      </aside>
+
+      <div class="hero">
+        <span class="sparkle" aria-hidden="true"></span>
+        <div class="eyebrow">Connection established</div>
+        <h1 id="greeting">Hello,<span>World!</span></h1>
+        <p class="lede" id="message">
+          The page is live, the pixels are glowing, and everything is ready for something wonderful.
+        </p>
+        <div class="actions">
+          <button type="button" id="helloButton">Say hello back&nbsp; →</button>
+          <span class="signature">index.html / ready</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const button = document.querySelector("#helloButton");
+    const message = document.querySelector("#message");
+
+    button.addEventListener("click", () => {
+      message.textContent = "Hello received. It’s lovely to meet you, too ✦";
+      button.textContent = "Hello sent ✓";
+      button.disabled = true;
+    });
+  </script>
+</body>
+</html>
