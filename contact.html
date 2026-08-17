@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b16">
+  <meta name="description" content="Get in touch with Omar.">
+  <title>Contact | Omar</title>
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="site-logo" href="Hello-world.html" aria-label="Omar home">
+      <span class="site-logo__mark" aria-hidden="true">O</span>
+      <span>OMAR</span>
+    </a>
+    <div class="site-nav__links">
+      <a href="Hello-world.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </div>
+  </nav>
+
+  <div class="orb orb--one" aria-hidden="true"></div>
+  <div class="orb orb--two" aria-hidden="true"></div>
+
+  <main class="shell">
+    <section class="card" aria-labelledby="contact-title">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand__mark"></span>Open channel</div>
+        <div class="sidebar__number" aria-hidden="true">03</div>
+        <p class="sidebar__note">Have an idea, a question, or just want to say hello? Drop a note.</p>
+      </aside>
+
+      <div class="hero page-hero">
+        <span class="sparkle" aria-hidden="true"></span>
+        <div class="eyebrow">Let’s connect</div>
+        <h1 id="contact-title">Say<span>hello.</span></h1>
+        <p class="lede">Good conversations are where great ideas begin. Send a message below.</p>
+
+        <form class="contact-form" id="contactForm">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" placeholder="Jane Smith" required>
+          </div>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required>
+          </div>
+          <div class="field field--wide">
+            <label for="message">Your message</label>
+            <textarea id="message" name="message" placeholder="Tell me what’s on your mind…" required></textarea>
+          </div>
+          <div class="form-footer">
+            <button type="submit">Send message&nbsp; →</button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector("#contactForm");
+    const status = document.querySelector("#formStatus");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = new FormData(form).get("name").trim();
+      status.textContent = `Thanks, ${name}. Your message looks great and is ready to send.`;
+      form.reset();
+    });
+  </script>
+</body>
+</html>
